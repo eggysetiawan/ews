@@ -32,4 +32,9 @@ class ExportController extends Controller
     {
         return (new Export())->export($kanwil, $type);
     }
+
+    public function uker()
+    {
+        return (new Export())->export(null, null, true);
+    }
 }

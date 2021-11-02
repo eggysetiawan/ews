@@ -42,6 +42,7 @@
     <div class="container">
         <div>
             <a href="{{ url('/') }}">Index</a>
+            <a href="{{ route('uker') }}">Export Uker</a>
             <a href="{{ route('perkanwil') }}">Per Kanwil</a>
             @if (!isset($type))
                 <a href="{{ route('export') }}">Export All</a>

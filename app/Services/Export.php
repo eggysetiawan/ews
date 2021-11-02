@@ -8,13 +8,13 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class Export
 {
-    public function export($kanwil = null, $type = null)
+    public function export($kanwil = null, $type = null, $uker = null)
     {
         $sheet = 'ews';
         $filename = 'ews_all_' . date('Ymdhis');
         $items = DailyRowEj::get();
 
-        if ($kanwil) {
+        if (!empty($kanwil)) {
             $items = DailyRowEj::where('kanwil', $kanwil)->get();
             $kanwil = '_' . str_replace(' ', '_', $items->first()->kanwil_name) . '_';
             $filename = 'ews' . $kanwil . date('YmdHis');
@@ -26,10 +26,19 @@ class Export
             $sheet = 'ews_' . $items->first()->kanwil_name . '_' . $type;
         }
 
-        return Excel::create($filename, function ($excel) use ($sheet, $items) {
-            $excel->sheet($sheet, function ($sheet) use ($items) {
+        if ($uker) {
+            $filename = 'ews_uker_' . date('YmdHis');
+        }
+
+        return Excel::create($filename, function ($excel) use ($sheet, $items, $uker) {
+            $excel->sheet($sheet, function ($sheet) use ($items, $uker) {
                 $sheet->setAutoSize(true);
-                $sheet->loadView('table', compact('items'));
+
+                if ($uker) {
+                    $sheet->loadView('uker', compact('items'));
+                } else {
+                    $sheet->loadView('table', compact('items'));
+                }
             });
         })->export('xlsx');
     }

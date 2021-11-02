@@ -20,5 +20,6 @@ Route::get('perkanwil/{kanwil}/{type}', 'DashboardController@perkanwilType')->na
 
 Route::get('/table', 'ExportController@index')->name('index');
 Route::get('export/all', 'ExportController@export')->name('export');
+Route::get('/export/uker', 'ExportController@uker')->name('uker');
 Route::get('/export/{kanwil}', 'ExportController@perkanwil')->name('export.perkanwil');
 Route::get('/export/{kanwil}/{type}', 'ExportController@perkanwilType')->name('export.perkanwil.type');
